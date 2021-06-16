@@ -1,0 +1,7 @@
+# Default ignored files
+**/**.autosave
+**/bin
+**/distribution
+**/data
+**/lib
+**/tmp
