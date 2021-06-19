@@ -427,14 +427,8 @@ public class Grid {
 	 * @param color Color, e.g.: color(255,0)
 	 */
 	public void fillColumn(int col, int color) {
-		float s = stroke_weight;
-		int c = color;
-		// strokeWeight(stroke_weight);
-		// stroke(grid_color);
-		parent.fill(col);
 		if (col < (npointx - 1)) {
-			// pushGrid();
-
+			parent.fill(color);
 			for (int i = 0; i < npointy - 1; i++) {
 				PVector p0 = getPosFromCoordinates(col, i);
 				PVector p1 = getPosFromCoordinates(col + 1, i);
@@ -442,11 +436,8 @@ public class Grid {
 				PVector p3 = getPosFromCoordinates(col, i + 1);
 				parent.quad(p0.x, p0.y, p1.x, p1.y, p2.x, p2.y, p3.x, p3.y);
 			}
-			// popGrid();
+			parent.noFill();
 		}
-		parent.noFill();
-		parent.stroke(c);
-		parent.strokeWeight(s);
 	}
 
 	// =========================================================
