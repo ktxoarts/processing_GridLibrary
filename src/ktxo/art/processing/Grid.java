@@ -30,6 +30,7 @@ import processing.core.*;
  * 
  * Rows and columns are numbered,  rows from 0 to npointy and columns from 0 to
  * npointx.
+ * 
  * <pre>
  *      C0    C1    C2    C3    ...   Cx
  * 
@@ -134,6 +135,7 @@ public class Grid {
 		sizex = corners[GridConstants.UPPER_RIGHT_CORNER].x - corners[GridConstants.UPPER_LEFT_CORNER].x;
 		sizey = corners[GridConstants.BOTTOM_RIGHT_CORNER].y - corners[GridConstants.UPPER_LEFT_CORNER].y;
 	}
+
 	// =========================================================
 	/**
 	 * Constructor Build a grid of size: len(rows[0]) * len(rows).
@@ -218,8 +220,10 @@ public class Grid {
 
 	// =========================================================
 	/**
-	 * Constructor Build a grid with npointx*xpointy {@link Point} distributed along sizex
-	 * and sizey
+	 * Constructor 
+	 * 
+	 * Build a grid with npointx*xpointy {@link Point} distributed along
+	 * sizex and sizey
 	 * 
 	 * See example folder
 	 * 
@@ -307,7 +311,8 @@ public class Grid {
 
 	// =========================================================
 	/**
-	 * Move Grid to a new location: moving point with coordinate (0,0) to (point.x, point.y) and adjusting all points 
+	 * Move Grid to a new location: moving point with coordinate (0,0) to (point.x,
+	 * point.y) and adjusting all points
 	 * 
 	 * @param point New location (x,y)
 	 */
@@ -321,7 +326,8 @@ public class Grid {
 	}
 
 	/**
-	 * Move Grid to a new location: moving point with coordinate (0,0) to (x, y) and adjusting all points 
+	 * Move Grid to a new location: moving point with coordinate (0,0) to (x, y) and
+	 * adjusting all points
 	 * 
 	 * @param x X location
 	 * @param y Y location
@@ -349,6 +355,55 @@ public class Grid {
 		// PVector n = PVector.sub(newpos,getPosition());
 		points[getIndexFromCoordinates(coord)].move(newpos);
 		setSize();
+	}
+
+	/**
+	 * Move a grid point identified by coord (x1,y1) to newpos (x2,y2) in screen
+	 * 
+	 * @param x1 X-Coordinate (from 0 to npointx-1)
+	 * @param y1 Y-Coordinate (from 0 to npointy-1)
+	 * @param x2 X location in screen
+	 * @param y2 Y location in screen
+	 */
+	public void movePoint(int x1, int y1, float x2, float y2) {
+		points[getIndexFromCoordinates(x1, y1)].move(x2, y2);
+		setSize();
+	}
+
+	/**
+	 * Move a grid point identified by coord to newpos  in screen
+	 * incrementing coordinates according to factor.
+	 * 
+	 * @param coord  Point coordinates to move
+	 * @param newpos New location of point [width, height]
+	 * @param factor Move point this factor
+	 */
+	public void movePoint(PVector coord, PVector newpos, float factor) {
+		PVector s = getPosFromCoordinates((int)coord.x, (int)coord.y);
+
+		PVector dir = PVector.sub(newpos, s).normalize();
+		dir.mult(factor);
+		PVector aux = PVector.add(s, dir);
+		movePoint(coord, aux);
+	}
+
+	/**
+	 * Move a grid point identified by coord (x1,y1) to newpos (x2,y2) in screen
+	 * incrementing coordinates according to factor.
+	 * 
+	 * @param x1     X-Coordinate (from 0 to npointx-1)
+	 * @param y1     Y-Coordinate (from 0 to npointy-1)
+	 * @param x2     X location in screen
+	 * @param y2     Y location in screen
+	 * @param factor Move point this factor
+	 */
+	public void movePoint(int x1, int y1, float x2, float y2, float factor) {
+		PVector s = getPosFromCoordinates(x1, y1);
+		PVector d = new PVector(x2, y2);
+		PVector dir = PVector.sub(d, s).normalize();
+		dir.mult(factor);
+		PVector aux = PVector.add(s, dir);
+		movePoint(new PVector(x1, y1), aux);
 	}
 
 	// =========================================================
@@ -480,7 +535,7 @@ public class Grid {
 			PVector dir = PVector.sub(destinationPoints[i], opoints[i]).normalize();
 			dir.mult(factor);
 			PVector aux = PVector.add(opoints[i], dir);
-			movePoint(new PVector(row, i), aux);
+			movePoint(new PVector(i, row), aux);
 			//
 		}
 	}
@@ -557,7 +612,7 @@ public class Grid {
 
 	/**
 	 * Helper function to locate a point in internal array {@link #points}
-	 *  
+	 * 
 	 * @param x X coordinate
 	 * @param y Y coordinate
 	 * 
@@ -569,7 +624,7 @@ public class Grid {
 
 	/**
 	 * Helper function to locate a point in internal array {@link #points}
-	 *  
+	 * 
 	 * @param point Point coordinates
 	 * 
 	 * @return Point index
@@ -745,7 +800,8 @@ public class Grid {
 	}
 
 	/**
-	 * Lock a list of points (avoid vibration) {@link ktxo.art.processing.Point#lock}
+	 * Lock a list of points (avoid vibration)
+	 * {@link ktxo.art.processing.Point#lock}
 	 * 
 	 * @param points Points to lock
 	 */
@@ -754,6 +810,7 @@ public class Grid {
 			lockedPoints[(int) (p.x + p.y * npointy)] = true;
 		}
 	}
+
 	/**
 	 * Unlock a point (avoid vibration) {@link ktxo.art.processing.Point#lock}
 	 * 
@@ -764,7 +821,8 @@ public class Grid {
 	}
 
 	/**
-	 * unLock a list of points (avoid vibration) {@link ktxo.art.processing.Point#lock}
+	 * unLock a list of points (avoid vibration)
+	 * {@link ktxo.art.processing.Point#lock}
 	 * 
 	 * @param points Points to lock
 	 */
@@ -773,7 +831,7 @@ public class Grid {
 			lockedPoints[(int) (p.x + p.y * npointy)] = false;
 		}
 	}
-	
+
 	// =========================================================
 	/**
 	 * Lock row points (avoid vibration) {@link ktxo.art.processing.Point#lock}
@@ -785,6 +843,7 @@ public class Grid {
 			lockedPoints[(i + row * npointx)] = true;
 		}
 	}
+
 	/**
 	 * Unlock column points (avoid vibration) {@link ktxo.art.processing.Point#lock}
 	 * 
@@ -795,6 +854,7 @@ public class Grid {
 			lockedPoints[(col + npointx * i)] = true;
 		}
 	}
+
 	/**
 	 * Lock row points (avoid vibration) {@link ktxo.art.processing.Point#lock}
 	 * 
@@ -816,6 +876,7 @@ public class Grid {
 			lockedPoints[(col + npointx * i)] = false;
 		}
 	}
+
 	// =========================================================
 	/**
 	 * Lock corners grid (avoid vibration)
@@ -836,8 +897,9 @@ public class Grid {
 	 * @param value     Amount of vibration, see
 	 *                  {@link ktxo.art.processing.Point#vibrate}
 	 * @param direction Vibration direction, noise id added to x-coordinate
-	 *                  {@link GridConstants#VIBRATE_X}, x-coordinate {@link GridConstants#VIBRATE_Y}
-	 *                  both coordinates {@link GridConstants#VIBRATE_ALL}
+	 *                  {@link GridConstants#VIBRATE_X}, x-coordinate
+	 *                  {@link GridConstants#VIBRATE_Y} both coordinates
+	 *                  {@link GridConstants#VIBRATE_ALL}
 	 */
 	public void vibrate(boolean enable, float value, int direction) {
 		vibration_enable = enable;
@@ -853,8 +915,9 @@ public class Grid {
 	 * @param value     Amount of vibration, see
 	 *                  {@link ktxo.art.processing.Point#vibrate}
 	 * @param direction Vibration direction, noise id added to x-coordinate
-	 *                  {@link GridConstants#VIBRATE_X}, x-coordinate {@link GridConstants#VIBRATE_Y}
-	 *                  both coordinates {@link GridConstants#VIBRATE_ALL}
+	 *                  {@link GridConstants#VIBRATE_X}, x-coordinate
+	 *                  {@link GridConstants#VIBRATE_Y} both coordinates
+	 *                  {@link GridConstants#VIBRATE_ALL}
 	 */
 	public void vibrate(PVector point, boolean enable, float value, int direction) {
 		vibration_enable = enable;
@@ -863,7 +926,7 @@ public class Grid {
 	}
 
 	/**
-	 * Enable/disable vibration 
+	 * Enable/disable vibration
 	 * 
 	 * @param status Vibration status
 	 */
@@ -876,9 +939,10 @@ public class Grid {
 	 * Shrink grid dimentions
 	 * 
 	 * @param factor Shrink number
-	 * @param on     Segment direction ({@link ktxo.art.processing.GridConstants#GRID_AX}) or
-	 *               vertical ({@link ktxo.art.processing.GridConstants#GRID_AY})
-	 */	
+	 * @param on     Segment direction
+	 *               ({@link ktxo.art.processing.GridConstants#GRID_AX}) or vertical
+	 *               ({@link ktxo.art.processing.GridConstants#GRID_AY})
+	 */
 	public void shrink(float factor, int on) {
 		if (on == GridConstants.GRID_AX || on == GridConstants.GRID_ALL) {
 			for (int j = 0; j < npointy; j++) {
@@ -900,8 +964,9 @@ public class Grid {
 	 * Expand grid dimentions
 	 * 
 	 * @param factor Expanding number
-	 * @param on     Segment direction ({@link ktxo.art.processing.GridConstants#GRID_AX}) or
-	 *               vertical ({@link ktxo.art.processing.GridConstants#GRID_AY})
+	 * @param on     Segment direction
+	 *               ({@link ktxo.art.processing.GridConstants#GRID_AX}) or vertical
+	 *               ({@link ktxo.art.processing.GridConstants#GRID_AY})
 	 */
 	public void expand(float factor, int on) {
 		if (on == GridConstants.GRID_AX || on == GridConstants.GRID_ALL) {
@@ -922,18 +987,12 @@ public class Grid {
 
 	// =========================================================
 	/*
-	public void arc(PVector p1, PVector p2) {
-		float s = stroke_weight;
-		int c = grid_color;
-		parent.stroke(parent.color(255, 0, 0));
-		parent.strokeWeight(1);
-		PVector P1 = getPosFromCoordinates((int) p1.x, (int) p1.y);
-		PVector P2 = getPosFromCoordinates((int) p2.x, (int) p2.x);
-		parent.curve(10, 40, P1.x, P1.y, P2.x, P2.y, 60, 120);
-		parent.stroke(c);
-		parent.strokeWeight(s);
-	}
-	*/
+	 * public void arc(PVector p1, PVector p2) { float s = stroke_weight; int c =
+	 * grid_color; parent.stroke(parent.color(255, 0, 0)); parent.strokeWeight(1);
+	 * PVector P1 = getPosFromCoordinates((int) p1.x, (int) p1.y); PVector P2 =
+	 * getPosFromCoordinates((int) p2.x, (int) p2.x); parent.curve(10, 40, P1.x,
+	 * P1.y, P2.x, P2.y, 60, 120); parent.stroke(c); parent.strokeWeight(s); }
+	 */
 	// =========================================================
 
 	/**
@@ -951,8 +1010,9 @@ public class Grid {
 	 * 
 	 * @param point  Segment coordinate (upper-left point)
 	 * @param weight Weight
-	 * @param on     Segment direction {@link ktxo.art.processing.GridConstants#GRID_AX} or
-	 *               vertical {@link ktxo.art.processing.GridConstants#GRID_AY}
+	 * @param on     Segment direction
+	 *               {@link ktxo.art.processing.GridConstants#GRID_AX} or vertical
+	 *               {@link ktxo.art.processing.GridConstants#GRID_AY}
 	 */
 	public void setSegmentWeight(PVector point, float weight, int on) {
 		if (on == GridConstants.GRID_AX) {
@@ -1016,8 +1076,9 @@ public class Grid {
 	 * 
 	 * @param point Segment coordinate (upper-left point)
 	 * @param color Color
-	 * @param on    Segment direction ({@link ktxo.art.processing.GridConstants#GRID_AX}) or
-	 *              vertical ({@link ktxo.art.processing.GridConstants#GRID_AY})
+	 * @param on    Segment direction
+	 *              ({@link ktxo.art.processing.GridConstants#GRID_AX}) or vertical
+	 *              ({@link ktxo.art.processing.GridConstants#GRID_AY})
 	 */
 	public void setSegmentColor(PVector point, int color, int on) {
 		if (on == GridConstants.GRID_AX) {
@@ -1126,7 +1187,7 @@ public class Grid {
 
 	// =========================================================
 	/**
-	 * Set Grid  color (all segments)
+	 * Set Grid color (all segments)
 	 * 
 	 * @param color Color
 	 */
@@ -1256,12 +1317,14 @@ public class Grid {
 
 	/**
 	 * Get grid size, grid size is calculated using corners:
+	 * 
 	 * <pre>
 	 * sizex = upper_right_corner.x - upper_left_corner.x
 	 * sizey = bottom_right_corner.y - upper_left_corner.y
 	 * </pre>
 	 * 
-	 * See {@link ktxo.art.processing.GridConstants#UPPER_LEFT_CORNER}, {@link ktxo.art.processing.GridConstants#UPPER_RIGHT_CORNER},{@link ktxo.art.processing.GridConstants#BOTTOM_LEFT_CORNER},{@link ktxo.art.processing.GridConstants#BOTTOM_RIGHT_CORNER}
+	 * See {@link ktxo.art.processing.GridConstants#UPPER_LEFT_CORNER},
+	 * {@link ktxo.art.processing.GridConstants#UPPER_RIGHT_CORNER},{@link ktxo.art.processing.GridConstants#BOTTOM_LEFT_CORNER},{@link ktxo.art.processing.GridConstants#BOTTOM_RIGHT_CORNER}
 	 * 
 	 * @return Grid size: [sizex, sizey]
 	 */
@@ -1328,7 +1391,7 @@ public class Grid {
 	}
 
 	/**
-	 * Get  version of the Library.
+	 * Get version of the Library.
 	 * 
 	 * @return String Library version
 	 */
