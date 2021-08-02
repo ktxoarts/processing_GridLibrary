@@ -39,8 +39,10 @@ See also [examples](examples)
 ![Movement](examples/Movement/example.gif)
 
 
-![Usage of Grid of Points (sync with music and more)](https://vimeo.com/566548032)
 
+![Usage of Grid of Points, sync with music](examples/sample_with_music.png)
+
+[Full video](https://vimeo.com/566548032)
 
 ## Installation
 
