@@ -40,6 +40,10 @@ Ver tambien [examples](examples)
 
 ![Movement](examples/Movement/example.gif)
 
+![Usage of Grid of Points, sync with music](examples/sample_with_music.png)
+
+[Full video](https://vimeo.com/566548032)
+
 ## Instalacion
 
 1. Descargar la ultima version de [Releases](https://github.com/ktxoarts/processing_GridLibrary/releases)
