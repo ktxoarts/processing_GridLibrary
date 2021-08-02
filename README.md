@@ -39,7 +39,9 @@ See also [examples](examples)
 ![Movement](examples/Movement/example.gif)
 
 
-![Usage of Grid of Points](https://vimeo.com/566548032)
+![Usage of Grid of Points (sync with music and more)](https://vimeo.com/566548032)
+
+
 ## Installation
 
 1. Download latest version from [Releases](https://github.com/ktxoarts/processing_GridLibrary/releases)
