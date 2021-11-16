@@ -20,6 +20,7 @@ public class Point {
 
 	float point_size = 4F;
 	int point_color = 0;
+	int point_cap = PConstants.ROUND;
 	private boolean locked = false;
 	private boolean hidden = false;
 
@@ -61,6 +62,21 @@ public class Point {
 		point_color = color;
 		point_size = size;
 	}
+	/**
+	 * Constructor 
+	 * 
+	 * @param parent Parent sketch
+	 * @param pos Point coordinates
+	 * @param color Point color
+	 * @param size Point size
+	 * @param cap Point stroke cap
+	 */
+	public Point(PApplet parent, PVector pos, int color, float size, int cap ) {
+		this(parent, pos);
+		point_color = color;
+		point_size = size;
+		point_cap = cap;
+	}	
 	// =========================================================
 
 	/**
@@ -124,6 +140,7 @@ public class Point {
 		if (!hidden) {
 			parent.stroke(point_color);
 			parent.strokeWeight(point_size);
+			parent.strokeCap(point_cap);
 			parent.point(center.x, center.y);
 			parent.stroke(c);
 			parent.strokeWeight(s);
@@ -213,7 +230,24 @@ public class Point {
 	public void setCenter(PVector center) {
 		this.center = center;
 	}
+	// =========================================================
+	/**
+	 * Set point cap
+	 * 
+	 * @param cap Point stroke cap. See strokeCap() in {@link processing.core.PApplet} (either SQUARE, PROJECT, or ROUND)
+	 */	
+	public void setCap(int cap) {
+		point_cap = cap;
+	}
 
+	/**
+	 * Get point stroke cap
+	 * 
+	 * @return Point stroke cap
+	 */
+	public int getCap() {
+		return point_cap;
+	}
 	// =========================================================
 	/**
 	 * Set point color

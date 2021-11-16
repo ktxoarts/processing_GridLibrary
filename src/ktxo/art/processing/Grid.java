@@ -52,6 +52,10 @@ public class Grid {
 	 */
 	public final static String VERSION = "##library.prettyVersion##";
 	/**
+	 * Default Point stroke cap
+	 */
+	public static final int POINT_CAP = PConstants.ROUND;	
+	/**
 	 * Default Point color
 	 */
 	public static final int POINT_COLOR = 255;
@@ -83,6 +87,7 @@ public class Grid {
 	private int npoints = 0;
 	private int grid_color = 0;
 	private int point_color = Grid.POINT_COLOR;
+	private int point_cap = Grid.POINT_CAP;
 	private int[] segment_ax_color;
 	private float[] segment_ax_weight;
 	private int[] segment_ay_color;
@@ -268,7 +273,7 @@ public class Grid {
 
 	// =========================================================
 	/**
-	 * Constructor Build a grid with npointx*xpointy Points distributed along screen
+	 * Constructor Build a grid with npointx*xpointy {@link Point} distributed along screen
 	 * width and height
 	 * 
 	 * See example folder
@@ -1195,7 +1200,28 @@ public class Grid {
 		setGridInternalColor(color);
 		setGridContourColor(color);
 	}
+	// =========================================================
+	/**
+	 * Set grid points stroke cap
+	 * 
+	 * @param cap Points stroke cap. See strokeCap() in {@link processing.core.PApplet} (either SQUARE, PROJECT, or ROUND)
+	 */
+	public void setPointCap(int cap) {
+		point_cap = cap;
+		for (int i = 0; i < npoints; i++) {
+			points[i].setCap(point_cap);
+		}
+	}
 
+	/**
+	 * Set stroke cap of one point
+	 * 
+	 * @param point Point coordinates
+	 * @param cap Stroke cap. See strokeCap() in {@link processing.core.PApplet} (either SQUARE, PROJECT, or ROUND)
+	 */
+	public void setPointCap(PVector point, int cap) {
+		this.points[getIndexFromCoordinates(point)].setCap(cap);
+	}
 	// =========================================================
 	/**
 	 * Set grid points color
