@@ -21,7 +21,7 @@ void setup() {
 
 void draw() {
   background(0);
-  g1.display();
+  g1.render();
 }
 
 ```
