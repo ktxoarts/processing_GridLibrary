@@ -44,6 +44,8 @@ See also [examples](examples)
 
 [Full video](https://vimeo.com/566548032)
 
+[More exmaples](https://vimeo.com/user143526379)
+
 ## Installation
 
 1. Download latest version from [Releases](https://github.com/ktxoarts/processing_GridLibrary/releases)
