@@ -44,7 +44,7 @@ See also [examples](examples)
 
 [Full video](https://vimeo.com/566548032)
 
-[More exmaples](https://vimeo.com/user143526379)
+[See more examples here](https://vimeo.com/user143526379)
 
 ## Installation
 
